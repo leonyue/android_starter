@@ -1,10 +1,13 @@
 package com.leonyue.android_starter;
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.content_main_constraintLayout);
+//        CoordinatorLayout coord = (CoordinatorLayout) findViewById(R.id.coor);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        layoutInflater.inflate(R.layout.sample_custom_view,layout);
+//        CustomView view = new CustomView(this);
+//        layout.addView(view);
+
     }
 
 }
