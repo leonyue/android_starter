@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
+        new Thread(mCustomView).start();
+
 //        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.content_main_constraintLayout);
 //        LayoutInflater layoutInflater = LayoutInflater.from(this);
 //        layoutInflater.inflate(R.layout.sample_custom_view,layout);
