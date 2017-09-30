@@ -28,13 +28,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.content_main_constraintLayout);
-//        CoordinatorLayout coord = (CoordinatorLayout) findViewById(R.id.coor);
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        layoutInflater.inflate(R.layout.sample_custom_view,layout);
-//        CustomView view = new CustomView(this);
-//        layout.addView(view);
-
+//        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.content_main_constraintLayout);
+//        LayoutInflater layoutInflater = LayoutInflater.from(this);
+//        layoutInflater.inflate(R.layout.sample_custom_view,layout);
     }
 
 }

@@ -9,4 +9,7 @@
     tools:context="com.leonyue.android_starter.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <com.leonyue.android_starter.CustomView2
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 </android.support.constraint.ConstraintLayout>
