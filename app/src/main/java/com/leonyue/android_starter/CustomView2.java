@@ -16,6 +16,7 @@ import android.view.View;
 
 public class CustomView2 extends View {
     private Paint mPaint;
+    private int raduis;
 
     public CustomView2(Context context) {
         super(context);
@@ -37,6 +38,13 @@ public class CustomView2 extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawCircle(this.getWidth() / 2,this.getHeight() / 2,200,mPaint);
+        canvas.drawCircle(this.getWidth() / 2,this.getHeight() / 2,raduis,mPaint);
+    }
+
+    public synchronized void setRaduis(int raduis) {
+        this.raduis = raduis;
+
+        ///< redraw
+        invalidate();
     }
 }
