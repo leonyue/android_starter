@@ -77,4 +77,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
     }
+
 }

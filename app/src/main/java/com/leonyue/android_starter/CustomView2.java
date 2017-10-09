@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.AnimationDrawable;
 import android.icu.util.MeasureUnit;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -25,6 +28,8 @@ public class CustomView2 extends View implements Runnable{
 
     public CustomView2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        AnimationDrawable keyframeAnimDrawable = (AnimationDrawable) this.getBackground();
+        keyframeAnimDrawable.start();
         initPaint();
     }
 
@@ -68,4 +73,21 @@ public class CustomView2 extends View implements Runnable{
             }
         }
     }
+
+    private static final String DEBUG = "DEBUG";
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.d(DEBUG,event.toString());
+        Log.d(DEBUG,"hitTest");
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.d(DEBUG,event.toString());
+        Log.d(DEBUG,"touchBegin");
+        return super.onTouchEvent(event);
+    }
+
 }
