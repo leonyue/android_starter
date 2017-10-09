@@ -11,6 +11,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 
 /**
  * Created by dj.yue on 2017/9/30.
@@ -30,6 +34,15 @@ public class CustomView2 extends View implements Runnable{
         super(context, attrs);
         AnimationDrawable keyframeAnimDrawable = (AnimationDrawable) this.getBackground();
         keyframeAnimDrawable.start();
+
+//        AlphaAnimation anim = new AlphaAnimation(0,1);
+//        anim.setDuration(2000);
+//        anim.setFillAfter(true);
+//        this.setAnimation(anim);
+
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.alpha_anim);
+        this.startAnimation(animation);
+
         initPaint();
     }
 
