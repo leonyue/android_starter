@@ -1,6 +1,13 @@
 package com.leonyue.android_starter;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,10 +15,14 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.animation.ValueAnimatorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +77,40 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
         new Thread(mCustomView).start();
+
+
+        //属性动画
+        //ValueAnimator
+        int curColor = this.getWindow().getStatusBarColor();
+        int color = Color.RED;
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(),curColor,color);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                MainActivity.this.getWindow().setStatusBarColor((Integer) animation.getAnimatedValue());
+            }
+        });
+        colorAnimation.setDuration(3000).setStartDelay(1000);
+        colorAnimation.start();
+
+        //ObjectAnimator 是ValueAnimator的子类 一般不需要注册UpdateListener,但需要提供属性的setter方法，如下的progress
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        Button btn = (Button) findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Log.d("DEBUG", String.valueOf(progressBar.getMax()));
+                //代码
+                int progress = progressBar.getProgress() == 100 ? 0 : 100;
+                ObjectAnimator objectAnimator = ObjectAnimator.ofInt(progressBar,"progress",progress);
+                objectAnimator.setDuration(2000);
+                objectAnimator.start();
+                //xml 属性动画放在animator文件夹
+                AnimatorSet animatorSet = (AnimatorSet) AnimatorInflater.loadAnimator(MainActivity.this,R.animator.scale);
+                animatorSet.setTarget(progressBar);
+                animatorSet.start();
+            }
+        });
 
 //        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.content_main_constraintLayout);
 //        LayoutInflater layoutInflater = LayoutInflater.from(this);
