@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionManager xmlns:android="http://schemas.android.com/apk/res/android">
+    <transition
+        android:fromScene="@layout/fragment_transition_scene_before"
+        android:toScene="@layout/fragment_transition_scene_after"
+        android:transition="@transition/slow_auto_transition" />
+</transitionManager>
