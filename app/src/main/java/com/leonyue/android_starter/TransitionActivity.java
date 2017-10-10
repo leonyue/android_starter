@@ -23,6 +23,10 @@ import android.support.annotation.Size;
 import android.support.annotation.UiThread;
 import android.support.annotation.VisibleForTesting;
 import android.support.annotation.WorkerThread;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
@@ -31,6 +35,7 @@ import android.transition.Scene;
 import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class TransitionActivity extends AppCompatActivity {
 
@@ -53,7 +59,7 @@ public class TransitionActivity extends AppCompatActivity {
 
     @NavigationMode
     public int getNavigationMode() {
-        return 2;
+        return TransitionActivity.h;
     }
     public void setNavigationMode(@NavigationMode int mode){
 
@@ -80,44 +86,92 @@ public class TransitionActivity extends AppCompatActivity {
         //...
 
         //线程注解
-        @UiThread//标记运行在UI线程，典型例子AsyncTask的实现
-        @MainThread
-        @WorkerThread
-        @BinderThread
-
-        //值范围注解
-        @Size(min=1)
-        @Size(max=23)
-        @Size(2)//2个元素
-        @Size(multiple = 2)//2的倍数
-        @IntRange(from=0,to=1000)
-        @FloatRange(from=0.0,to=10.0)
-
-
-        //权限注解
-        @RequiresPermission(Manifest.permission.SET_WALLPAPER)
-        @RequiresPermission(anyOf = {
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION})
-        @RequiresPermission(allOf = {
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        })
-        @RequiresPermission(Manifest.permission.BLUETOOTH)//对于Intent调用所需权限，可以在ACTION字符串定义出添加注解
-        @RequiresPermission.Read(@RequiresPermission(Manifest.permission.BLUETOOTH))
-
-
-        //重写函数注解
-        @CallSuper
-
-        //返回值注解(如果我们编写的函数需要调用者对返回值做某种处理)
-        @CheckResult(suggest = "#enforcePermission(String,int,int,String)")
+//        @UiThread//标记运行在UI线程，典型例子AsyncTask的实现
+//        @MainThread
+//        @WorkerThread
+//        @BinderThread
+//
+//        //值范围注解
+//        @Size(min=1)
+//        @Size(max=23)
+//        @Size(2)//2个元素
+//        @Size(multiple = 2)//2的倍数
+//        @IntRange(from=0,to=1000)
+//        @FloatRange(from=0.0,to=10.0)
+//
+//
+//        //权限注解
+//        @RequiresPermission(Manifest.permission.SET_WALLPAPER)
+//        @RequiresPermission(anyOf = {
+//                Manifest.permission.ACCESS_COARSE_LOCATION,
+//                Manifest.permission.ACCESS_FINE_LOCATION})
+//        @RequiresPermission(allOf = {
+//                Manifest.permission.ACCESS_COARSE_LOCATION,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//        })
+//        @RequiresPermission(Manifest.permission.BLUETOOTH)//对于Intent调用所需权限，可以在ACTION字符串定义出添加注解
+//        @RequiresPermission.Read(@RequiresPermission(Manifest.permission.BLUETOOTH))
+//
+//
+//        //重写函数注解
+//        @CallSuper
+//
+//        //返回值注解(如果我们编写的函数需要调用者对返回值做某种处理)
+//        @CheckResult(suggest = "#enforcePermission(String,int,int,String)")
 
         //测试注解
         @VisibleForTesting
 
         //Keep注解
-        @Keep
+//        @Keep
+
+
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View pageView1 = inflater.inflate(R.layout.viewpage_1,null);
+        View pageView2 = inflater.inflate(R.layout.viewpage_2,null);
+        View pageView3 = inflater.inflate(R.layout.viewpage_3,null);
+        final ArrayList<View> viewList = new ArrayList<View>();
+        viewList.add(pageView1);
+        viewList.add(pageView2);
+        viewList.add(pageView3);
+
+        viewPager.setAdapter(new PagerAdapter() {
+
+            private String[] mTitles = new String[]{"红","绿","蓝"};
+
+            @Override
+            public int getCount() {
+                return viewList.size();
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view == object;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView((View) object);
+            }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                container.addView(viewList.get(position));
+                return viewList.get(position);
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mTitles[position];
+            }
+        });
+
 
         final ViewGroup transitionContainer = (ViewGroup) findViewById(R.id.activity_transition_LinearLayout);
         final TextView text = (TextView) transitionContainer.findViewById(R.id.text);
@@ -143,12 +197,19 @@ public class TransitionActivity extends AppCompatActivity {
             * */
             @Override
             public void onClick(View v) {
-//                TransitionManager.beginDelayedTransition(transitionContainer);
-//                visible = !visible;
-//                text.setVisibility(visible?View.VISIBLE:View.GONE);
-                gotoScene(before?mScene1:mScene2);
+                TransitionManager.beginDelayedTransition(transitionContainer);
+                visible = !visible;
+                text.setVisibility(visible?View.VISIBLE:View.GONE);
+                Snackbar.make(v,"Here is a SnackBar",Snackbar.LENGTH_SHORT)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                before = !before;
+                            }
+                        })
+                        .show();
+//                gotoScene(before?mScene1:mScene2);
+//                before = !before;
             }
         });
 
