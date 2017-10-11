@@ -20,7 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".TransitionActivity" />
-        <activity android:name=".NavigationActivity"></activity>
+        <activity android:name=".NavigationActivity" />
+        <activity
+            android:name=".CollapseActivity"
+            android:label="@string/title_activity_collapse"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
