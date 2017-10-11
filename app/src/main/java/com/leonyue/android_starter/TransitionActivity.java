@@ -1,6 +1,7 @@
 package com.leonyue.android_starter;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.AnimRes;
 import android.support.annotation.AnimatorRes;
@@ -210,6 +211,14 @@ public class TransitionActivity extends AppCompatActivity {
                         .show();
 //                gotoScene(before?mScene1:mScene2);
 //                before = !before;
+            }
+        });
+
+        Button gotoNavi = (Button) findViewById(R.id.button3);
+        gotoNavi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TransitionActivity.this,NavigationActivity.class));
             }
         });
 

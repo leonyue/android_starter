@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransitionActivity"></activity>
+        <activity android:name=".TransitionActivity" />
+        <activity android:name=".NavigationActivity"></activity>
     </application>
 
 </manifest>
