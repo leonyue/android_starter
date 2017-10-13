@@ -40,9 +40,17 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    static {
+        System.loadLibrary("jnidemo");
+    }
+
+    public static native String getStringFromJni();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("DEBUG",getStringFromJni());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
