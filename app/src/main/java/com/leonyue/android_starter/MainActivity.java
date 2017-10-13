@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Log.d("DEBUG",getStringFromJni());
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -146,6 +147,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        Button gotoBaiduMap = (Button) findViewById(R.id.gotoBaiduMap);
+        Log.d("DEBUG","goto map is"+gotoBaiduMap.toString());
+        gotoBaiduMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,BaiduMapActivity.class));
+            }
+        });
 
 //        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.content_main_constraintLayout);
 //        LayoutInflater layoutInflater = LayoutInflater.from(this);
